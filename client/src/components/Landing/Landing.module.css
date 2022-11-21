@@ -1,0 +1,61 @@
+.container {
+  background-color: #fcfc4f;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-template-columns: 0.3fr 1.3fr 1fr;
+  grid-template-rows: 1.3fr 2.4fr 2fr;
+  gap: 5px 0px;
+  max-height: 100vh;
+  justify-content: center;
+  align-content: center;
+  justify-items: stretch;
+  align-items: stretch;
+}
+
+.textButton {
+  grid-area: 2 / 3 / 3 / 4;
+  padding-left: 50px;
+  max-width: 400px;
+}
+
+.button {
+  z-index: 10;
+  padding-top: 75px;
+  margin-bottom: -40px;
+  justify-self: end;
+}
+
+.footer {
+  grid-area: 3 / 1 / 4 / 4;
+  background-color: #0074be;
+}
+
+.image {
+  grid-area: 2 / 2 / 3 / 3;
+  padding-top: 30px;
+  margin-bottom: -40px;
+  justify-self: center;
+}
+
+.buttonTop {
+  background: #fcfc4f;
+  font-family: inherit;
+  padding: 0.7em 1.1em;
+  font-weight: 700;
+  font-size: 24px;
+  border: 3px solid black;
+  border-radius: 0.4em;
+  box-shadow: 0.1em 0.1em;
+}
+
+.buttonTop:hover {
+  background-color: #fcfc30;
+  color: black;
+  transform: translate(-0.05em, -0.05em);
+  box-shadow: 0.15em 0.15em;
+}
+
+.buttonTop:active {
+  transform: translate(0.05em, 0.05em);
+  box-shadow: 0.05em 0.05em;
+}

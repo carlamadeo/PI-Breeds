@@ -1,0 +1,104 @@
+.container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 0.2fr 2.6fr;
+  align-items: stretch;
+  font-size: 19px;
+  max-width: 1400px;
+  margin: 80px auto;
+  position: relative;
+}
+
+.container img {
+  grid-area: 1 / 1 / 3 / 2;
+  border-radius: 10px;
+  max-width: 700px;
+  max-height: 550px;
+  position: absolute;
+  right: 70px;
+  overflow: hidden;
+  z-index: 1;
+  box-shadow: 0px 2px 6px #000000;
+}
+
+.name {
+  grid-area: 1 / 2 / 2 / 3;
+  background-color: #0074be;
+  font-size: 1.6rem;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 15px;
+  font-weight: 500;
+  text-shadow: 0px 2px 2px #000000;
+  color: rgb(255, 255, 255);
+  border-radius: 10px;
+  z-index: 3;
+}
+
+.dataContainer {
+  grid-area: 2 / 2 / 3 / 3;
+  background: #ecf0f1;
+  z-index: 3;
+  min-width: 600px;
+  border-radius: 0 0px 10px 0;
+  /*box-shadow: 0px 0px 6px #000000;*/
+}
+
+.data {
+  display: grid;
+  grid-template-columns: 0.2fr 1.6fr 1fr;
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  margin: 30px 0 0 30px;
+  padding-bottom: 15px;
+}
+
+.iconWeight {
+  background-image: url('../../img/icons/weight.png');
+  background-repeat: no-repeat;
+  background-size: 24px;
+}
+
+.iconHeight {
+  background-image: url('../../img/icons/height.png');
+  background-repeat: no-repeat;
+  background-size: 28px;
+}
+
+.iconLife {
+  background-image: url('../../img/icons/lifespan.png');
+  background-repeat: no-repeat;
+  background-size: 28px;
+}
+
+.iconTemperaments {
+  background-image: url('../../img/icons/temperaments.png');
+  background-repeat: no-repeat;
+  background-size: 28px;
+}
+
+.info {
+  font-weight: 300;
+  color: rgb(95, 95, 95);
+}
+
+.info li {
+  list-style-type: none;
+}
+
+.text {
+  font-weight: 500;
+  text-transform: uppercase;
+  text-shadow: 0px 1px 1px #acacac;
+  color: rgb(0, 0, 0);
+}
+
+.backButton {
+  float: right;
+  margin-top: 50px;
+  padding: 10px 30px 10px 30px;
+  /*background-color: #0074be;*/
+  /*color: white;*/
+  font-size: 1rem;
+}

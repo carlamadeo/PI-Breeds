@@ -1,0 +1,41 @@
+.container {
+  padding-top: 20px;
+}
+
+.sorts {
+  margin-bottom: 20px;
+  background-color: #ffffff;
+}
+
+.clearButton {
+  padding-bottom: 20px;
+}
+
+.title {
+  background-color: #0074be;
+  color: #ffffff;
+  font-size: 18px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.nameContainer {
+  border-color: #505050;
+  border-style: solid;
+  border-width: 1px;
+  background-color: #ffffff;
+  font-size: 15px;
+  height: 447px;
+}
+
+.temperamentContainer {
+  margin-top: 25px;
+  border-color: #505050;
+  border-style: solid;
+  border-width: 1px;
+  background-color: #ffffff;
+  font-size: 15px;
+  height: 447px;
+}

@@ -1,0 +1,24 @@
+.title {
+  margin: 0.8em 3rem;
+  font-weight: 400;
+  font-size: 70px;
+  color: transparent;
+  background: #000000;
+  background-clip: text;
+  text-shadow: 2px 5px 5px rgba(255, 255, 255, 0.4);
+}
+
+.detail {
+  margin: 0.2em 3rem;
+  font-size: 26px;
+}
+
+.container {
+  position: absolute;
+  /*left: 55%;*/
+  left: 50%;
+  top: 40%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}

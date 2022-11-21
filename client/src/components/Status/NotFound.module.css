@@ -1,0 +1,8 @@
+.imageBackground {
+  height: 92.5vh;
+  background-color: #fcfc4f;
+  background-image: url('../../img/404.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}

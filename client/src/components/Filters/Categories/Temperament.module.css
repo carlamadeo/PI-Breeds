@@ -1,0 +1,8 @@
+.container {
+  overflow-y: scroll;
+  max-height: 38vh;
+}
+
+:checked+span {
+  font-weight: 600;
+}

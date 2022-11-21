@@ -1,0 +1,30 @@
+.nav {
+  height: 70px;
+  background-color: #002e4c;
+  display: block;
+}
+
+.logo {
+  float: right;
+  padding-right: 30px;
+  padding-top: 15px;
+  height: 35px;
+}
+
+.links {
+  padding-left: 10px;
+  padding-top: 20px;
+}
+
+.list {
+  text-decoration: none;
+  cursor: pointer;
+  color: #ffffff;
+  padding: 25px 20px;
+  font-size: 1rem;
+}
+
+.active {
+  background-color: rgba(0, 93, 151, 0.4);
+  font-size: 1.1rem;
+}

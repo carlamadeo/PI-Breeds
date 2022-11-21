@@ -1,0 +1,59 @@
+.message {
+  margin: 0 auto;
+  display: table;
+  width: 500px;
+  color: rgb(255, 255, 255);
+  transition: all 0.2s ease;
+  max-width: 100%;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  padding: 10px 20px 40px;
+  border-radius: 8px;
+  flex-direction: column;
+  box-shadow: 0px 2px 6px #000000;
+}
+
+.messageWrong {
+  background-color: rgba(214, 0, 0, 0.85);
+  border: 6px solid #700000
+}
+
+.messageGood {
+  background-color: rgba(0, 165, 0, 0.9);
+  border: 6px solid rgb(0, 95, 0);
+}
+
+.messageBody>p {
+  line-height: 1.2;
+  margin-top: 6px;
+}
+
+.closeButton {
+  margin-right: 25px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.25);
+  box-shadow: 1.5px 1.5px rgba(0, 0, 0, 0.4);
+  border: none;
+  padding: 10px 15px;
+  font-size: 16px;
+  color: #fff;
+  outline: none;
+  cursor: pointer;
+}
+
+.closeButton:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.messageTitle {
+  font-weight: 400;
+  font-size: 18px;
+}

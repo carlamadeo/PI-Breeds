@@ -1,0 +1,35 @@
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -25px 0 0 -25px;
+  text-align: center;
+}
+
+.image {
+  max-width: 120px;
+}
+
+.loading {
+  --size: 15px;
+  --timing: 0.7s;
+  --displace: 120px;
+  border-radius: 50%;
+  width: var(--size);
+  height: var(--size);
+  background: #000;
+  margin-right: var(--displace);
+  animation: animation321 var(--timing) infinite alternate cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes animation321 {
+  0% {
+    background: #fcfc4f;
+    transform: translateX(var(--displace));
+  }
+
+  100% {
+    background: #0074be;
+    transform: translateX(00px);
+  }
+}
