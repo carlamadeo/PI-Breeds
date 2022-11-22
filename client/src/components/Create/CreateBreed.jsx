@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
-import { createBreed, setCreateResponse, getBreeds } from '../../redux/actions';
+import { createBreed, setCreateResponse, getBreeds, setDisplayBreeds } from '../../redux/actions';
 import Alert from '../Status/Alert';
 import Loading from '../Status/Loading';
 import validators from './formValidators';
@@ -42,6 +42,7 @@ const CreateBreed = () => {
       if(!input.min_life_span) delete input.min_life_span;
       if(!input.max_life_span) delete input.max_life_span;
       dispatch(createBreed(input));
+      dispatch(setDisplayBreeds(breeds));
       document.querySelectorAll('input[type=checkbox]').forEach(el => el.checked = false);
       setErrors({
         name: '', min_height: '', max_height: '', min_weight: '', max_weight: '', min_life_span: '', max_life_span: '', temperaments: '',
@@ -68,7 +69,6 @@ const CreateBreed = () => {
         setErrors(prev => ({ ...prev, weightMinMax: validators.minMax(input.min_weight, input.max_weight, 'Weight') }));
       }
       if(input.min_life_span && input.max_life_span) {
-        console.log('first')
         setErrors(prev => ({ ...prev, lifeSpanMinMax: validators.minMax(input.min_life_span, input.max_life_span, 'Life Span') }));
       }
     }

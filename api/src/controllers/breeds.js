@@ -39,6 +39,21 @@ const getApiBreeds = async (name, breedId) => {
     throw (API_ERROR);
   }
 }
+
+const getCreated = async (req, res) => {
+  console.log('first')
+  try {
+
+    const dbBreeds = await Breed.findAll();
+
+    return res.status(200).send({ count: dbBreeds.length });
+
+  } catch(error) {
+    return res.status(400).send('error');
+  }
+}
+
+
 //TODO: para no repetir codigo, hacer que el de breedId sea un array por mas que sea uno solo
 const getDbBreeds = async (name, breedId) => {
   const findParams = {
@@ -88,7 +103,9 @@ const getDbBreeds = async (name, breedId) => {
   if(name) {
     findParams.where = { name: { [Op.iLike]: `${name}%` } }
   }
+
   try {
+
     const dbBreeds = await Breed.findAll(findParams);
     const breeds = [];
     dbBreeds.map(b => {
@@ -225,8 +242,6 @@ const createBreed = async (req, res) => {
 const deleteBreed = async (req, res) => {
   const { breedId } = req.params;
 
-  console.log(typeof (breedId))
-
   try {
 
     const response = await Breed.destroy({
@@ -248,5 +263,6 @@ module.exports = {
   getBreeds,
   getBreedDetail,
   createBreed,
+  getCreated,
   deleteBreed
 };

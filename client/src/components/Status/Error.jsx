@@ -3,7 +3,6 @@ import styles from './Error.module.css';
 
 const Error = ({ response }) => {
 
-  console.log(response)
   return (
     <>
       <div className={styles.container}>

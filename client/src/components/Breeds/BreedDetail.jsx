@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useParams, useHistory } from 'react-router-dom';
-import { deleteBreed, getBreedDetail, getBreeds, setDeleteResponse } from '../../redux/actions';
+import { deleteBreed, getBreedDetail, getBreeds, setDeleteResponse, setDisplayBreeds } from '../../redux/actions';
 import styles from './BreedDetail.module.css';
 import noPicture from '../../img/newDog.png';
 import Loading from '../Status/Loading';
@@ -14,6 +14,7 @@ const BreedDetail = () => {
   const params = useParams();
   const dispatch = useDispatch();
   const breed = useSelector(state => state.breed);
+  const breeds = useSelector(state => state.breeds);
   const isLoading = useSelector(state => state.isLoading);
   const detailResponse = useSelector(state => state.getDetailResponse);
   const deleteResponse = useSelector(state => state.deleteResponse);
@@ -35,7 +36,7 @@ const BreedDetail = () => {
   const handleDelete = () => {
     setIsDeleting('Deleting');
     dispatch(deleteBreed(params.id));
-    //dispatch(getBreeds());
+    dispatch(setDisplayBreeds(breeds));
   };
 
   const closeAlert = (event) => {
