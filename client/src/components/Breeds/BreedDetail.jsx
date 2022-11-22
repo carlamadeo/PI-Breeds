@@ -35,6 +35,7 @@ const BreedDetail = () => {
   const handleDelete = () => {
     setIsDeleting('Deleting');
     dispatch(deleteBreed(params.id));
+    //dispatch(getBreeds());
   };
 
   const closeAlert = (event) => {
@@ -47,8 +48,6 @@ const BreedDetail = () => {
 
   useEffect(() => {
     setIsOpen(true);
-    dispatch(getBreeds());
-
     //eslint-disable-next-line
   }, [deleteResponse]);
 

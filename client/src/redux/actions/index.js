@@ -5,14 +5,14 @@ export const GET_BREEDS_BY_NAME_RESPONSE = 'GET_BREEDS_BY_NAME_RESPONSE';
 export const GET_BREED_DETAIL = 'GET_BREED_DETAIL';
 export const GET_BREED_DETAIL_RESPONSE = 'GET_BREED_DETAIL_RESPONSE';
 export const CREATE_BREED = 'CREATE_BREED';
-export const GET_TEMPERAMENTS = 'GET_TEMPERAMENTS';
-export const TOGGLE_LOADING = 'TOGGLE_LOADING';
 export const CREATE_RESPONSE = 'CREATE_RESPONSE';
+export const GET_TEMPERAMENTS = 'GET_TEMPERAMENTS';
+export const DELETE_BREED = 'DELETE_BREED';
 export const DELETE_RESPONSE = 'DELETE_RESPONSE';
 export const GET_RESPONSE = 'GET_RESPONSE';
+export const TOGGLE_LOADING = 'TOGGLE_LOADING';
 const URL = 'http://localhost:3001';
 
-//TODO: VER TODOS LOS CATCHS ERRORS!!
 
 const getBreeds = () => {
   return async (dispatch) => {
@@ -99,17 +99,27 @@ const setByIdResponse = (payload) => {
 }
 
 const createBreed = (breed) => {
+  const tempsId = breed.temperaments?.map(t => t.id)
+  const createBreed = { ...breed };
+  createBreed.temperaments = tempsId;
+
+  const tempsName = breed.temperaments?.map(t => t.name);
+  const addBreed = { ...breed };
+  addBreed.temperaments = tempsName;
+
   return async (dispatch) => {
     dispatch({ type: TOGGLE_LOADING, payload: true });
     try {
       const response = await fetch(`${URL}/dogs/`, {
         method: 'POST',
-        body: JSON.stringify(breed),
+        body: JSON.stringify(createBreed),
         headers: { 'Content-Type': 'application/json' }
       });
       const payload = await response.json();
       if(payload.type === 'Error') throw (payload);
+      addBreed.id = payload.id;
       dispatch(setCreateResponse(payload));
+      dispatch({ type: CREATE_BREED, payload: addBreed });
       dispatch({ type: TOGGLE_LOADING, payload: false });
     }
     catch(error) {
@@ -134,6 +144,7 @@ const deleteBreed = (id) => {
       });
       const payload = await response.json();
       if(payload.type === 'Error') throw (payload);
+      dispatch({ type: DELETE_BREED, payload: id });
       dispatch(setDeleteResponse(payload));
       dispatch({ type: TOGGLE_LOADING, payload: false });
     }

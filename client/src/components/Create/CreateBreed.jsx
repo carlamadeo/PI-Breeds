@@ -48,6 +48,7 @@ const CreateBreed = () => {
         heightMinMax: '', weightMinMax: '', lifeSpanMinMax: ''
       });
       setInput({ name: '', min_height: '', max_height: '', min_weight: '', max_weight: '', min_life_span: '', max_life_span: '', temperaments: [] });
+      //dispatch(getBreeds());
     }
   };
 
@@ -73,15 +74,15 @@ const CreateBreed = () => {
     }
   }
 
-  const addTemperament = (id) => {
+  const addTemperament = (temp) => {
+    const { id } = temp;
     if(!input.temperaments.find(temp => temp === id)) {
-      setInput(prev => ({ ...prev, temperaments: [...prev.temperaments, id] }));
+      setInput(prev => ({ ...prev, temperaments: [...prev.temperaments, temp] }));
       setErrors(prev => ({ ...prev, temperaments: '' }));
     }
     else {
       setInput(prev => ({ ...prev, temperaments: prev.temperaments.filter(temp => temp !== id) }));
       if(!input.temperaments.length) {
-        console.log(input.temperaments)
         setErrors(prev => ({ ...prev, temperaments: 'Please provide at least one Temperament' }));
       }
     }
@@ -99,6 +100,7 @@ const CreateBreed = () => {
 
   const closeAlert = (event) => {
     event.preventDefault();
+
     setIsOpen(false);
     dispatch(setCreateResponse(''));
     setIsCreating('');
@@ -112,7 +114,7 @@ const CreateBreed = () => {
 
   useEffect(() => {
     setIsOpen(true);
-    dispatch(getBreeds());
+
     //eslint-disable-next-line
   }, [response]);
 
@@ -181,7 +183,7 @@ const CreateBreed = () => {
                   <div key={temp.id}>
                     <label >
                       <div>
-                        <input type='checkbox' onChange={() => { addTemperament(temp.id) }}></input>
+                        <input type='checkbox' onChange={() => { addTemperament(temp) }}></input>
                         <span>{temp.name}</span>
                       </div>
                     </label>

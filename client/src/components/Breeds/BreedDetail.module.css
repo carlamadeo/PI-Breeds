@@ -98,9 +98,20 @@
   float: right;
   margin-top: 50px;
   padding: 10px 30px 10px 30px;
-  /*background-color: #0074be;*/
-  /*color: white;*/
   font-size: 1rem;
+}
+
+.deleteButton {
+  float: left;
+  margin-top: 50px;
+  padding: 10px 30px 10px 30px;
+  background-color: #a70000;
+  color: white;
+  font-size: 1rem;
+}
+
+.deleteButton:hover {
+  background-color: #800000;
 }
 
 .alert {

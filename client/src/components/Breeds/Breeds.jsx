@@ -7,6 +7,8 @@ import Error from '../Status/Error';
 
 const Breeds = ({ display }) => {
 
+  console.log(display)
+
   const isLoading = useSelector(state => state.isLoading);
   const response = useSelector(state => state.getByNameResponse);
 

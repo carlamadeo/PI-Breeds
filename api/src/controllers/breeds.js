@@ -212,6 +212,7 @@ const createBreed = async (req, res) => {
     for(temp of newTemps) {
       await breed.addTemperaments(temp);
     }
+    BREED_CREATED.id = breed.dataValues.id;
     return res.status(201).send(BREED_CREATED);
   }
   catch(error) {
