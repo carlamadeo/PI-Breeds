@@ -5,6 +5,7 @@ const DB_ERROR = { type: 'Bad Request', message: 'Could not retrieve data from D
 const DB_POST_ERROR = { type: 'Error', message: 'Validation error' };
 const NOT_FOUND = { type: 'Not Found', message: 'No breeds found' };
 const BREED_CREATED = { type: 'Created', detail: 'Breed created successfully!' };
+const BREED_DELETED = { type: 'Deleted', detail: 'Breed deleted successfully!' };
 const toPascalCase = (str) => {
   if(/^[\p{L}\d]+$/iu.test(str)) {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -23,5 +24,6 @@ module.exports = {
   DB_POST_ERROR,
   NOT_FOUND,
   BREED_CREATED,
+  BREED_DELETED,
   toPascalCase
 }

@@ -26,6 +26,15 @@ const Alert = ({ isOpen, onClose, response }) => {
           <button className={styles.closeButton} onClick={onClose}>Close</button>
         </div>
       }
+      {isOpen && response.type === 'Deleted' &&
+        <div className={`${styles.message} ${styles.messageGood}`}>
+          <div className={styles.messageBody}>
+            <p className={styles.messageTitle}>Congratulations</p>
+            <p>{response.detail}</p>
+          </div>
+          <button className={styles.closeButton} onClick={onClose}>Close</button>
+        </div>
+      }
 
     </>
   );

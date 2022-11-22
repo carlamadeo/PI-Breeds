@@ -9,6 +9,7 @@ import {
   CREATE_BREED,
   GET_TEMPERAMENTS,
   CREATE_RESPONSE,
+  DELETE_RESPONSE,
   TOGGLE_LOADING
 } from '../actions/'
 
@@ -19,10 +20,11 @@ const initialState = {
   breed: '',
   temperaments: [],
   isLoading: true,
-  createResponse: {},
   getResponse: {},
   getByNameResponse: {},
-  getDetailResponse: {}
+  getDetailResponse: {},
+  createResponse: {},
+  deleteResponse: {}
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -49,6 +51,8 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return { ...state, isLoading: payload }
     case CREATE_RESPONSE:
       return { ...state, createResponse: payload };
+    case DELETE_RESPONSE:
+      return { ...state, deleteResponse: payload };
     default:
       return state;
   }

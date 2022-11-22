@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { NavLink, useHistory } from 'react-router-dom';
 import { createBreed, setCreateResponse, getBreeds } from '../../redux/actions';
-import validators from './formValidators';
-import styles from './CreateBreed.module.css';
 import Alert from '../Status/Alert';
 import Loading from '../Status/Loading';
-import Home from '../Home/Home';
-import BreedDetail from '../Breeds/BreedDetail';
-import { NavLink } from 'react-router-dom';
+import validators from './formValidators';
+import styles from './CreateBreed.module.css';
 
 const CreateBreed = () => {
 
@@ -19,6 +17,7 @@ const CreateBreed = () => {
   const [disabled, setDisabled] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [isCreating, setIsCreating] = useState('');
+  let history = useHistory();
 
   const [input, setInput] = useState(
     { name: '', min_height: '', max_height: '', min_weight: '', max_weight: '', min_life_span: '', max_life_span: '', temperaments: [] }
@@ -103,6 +102,7 @@ const CreateBreed = () => {
     setIsOpen(false);
     dispatch(setCreateResponse(''));
     setIsCreating('');
+    history.push('/breeds');
   }
 
   useEffect(() => {

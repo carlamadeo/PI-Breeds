@@ -22,7 +22,6 @@ const Home = () => {
     document.querySelectorAll('[id^="page-"]').forEach(element => {
       element.classList.remove(styles.currentPage);
     });
-    //document.querySelectorAll('[id^="page-"]')}
     document.querySelector(`#page-${pageNumber}`)?.classList.add(styles.currentPage);
   }
 

@@ -56,12 +56,12 @@ const Filters = ({ setPageNumber }) => {
   }
 
   const clearFilters = () => {
+    dispatch(setDisplayBreeds(breeds));
     document.querySelectorAll('input[type=checkbox]').forEach(el => el.checked = false);
     document.querySelector('input[type=text]').value = '';
     document.querySelectorAll('select')[0].selectedIndex = 0;
     dispatch(setByNameResponse(''));
     dispatch(getBreedsByName(''));
-    dispatch(setDisplayBreeds(breeds));
     setFilterByName([]);
     setFilterByTemperament([]);
   }

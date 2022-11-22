@@ -1,6 +1,6 @@
 const { Op } = require('sequelize');
 const { Breed, Temperament } = require('../db');
-const { API_URL, DB_ERROR, API_ERROR, NOT_FOUND, BREED_CREATED, DB_POST_ERROR } = require('../utils');
+const { API_URL, DB_ERROR, API_ERROR, NOT_FOUND, BREED_CREATED, BREED_DELETED, DB_POST_ERROR } = require('../utils');
 
 const isUUID = (str) => {
   const regexExp = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi;
@@ -221,8 +221,31 @@ const createBreed = async (req, res) => {
   }
 }
 
+const deleteBreed = async (req, res) => {
+  const { breedId } = req.params;
+
+  console.log(typeof (breedId))
+
+  try {
+
+    const response = await Breed.destroy({
+      where: {
+        id: breedId
+      }
+    });
+
+    if(response) return res.status(200).send(BREED_DELETED);
+    return res.status(200).send({ type: 'Not Deleted', detail: 'No breeds found' });
+
+  } catch(error) {
+    DB_ERROR.detail = error;
+    return res.status(400).send(DB_ERROR);
+  }
+}
+
 module.exports = {
   getBreeds,
   getBreedDetail,
-  createBreed
+  createBreed,
+  deleteBreed
 };
