@@ -40,19 +40,6 @@ const getApiBreeds = async (name, breedId) => {
   }
 }
 
-const getCreated = async (req, res) => {
-  console.log('first')
-  try {
-
-    const dbBreeds = await Breed.findAll();
-
-    return res.status(200).send({ count: dbBreeds.length });
-
-  } catch(error) {
-    return res.status(400).send('error');
-  }
-}
-
 
 //TODO: para no repetir codigo, hacer que el de breedId sea un array por mas que sea uno solo
 const getDbBreeds = async (name, breedId) => {

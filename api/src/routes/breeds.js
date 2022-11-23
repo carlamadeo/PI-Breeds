@@ -3,10 +3,6 @@ const { getBreeds, getBreedDetail, createBreed, deleteBreed, getCreated } = requ
 
 const router = Router();
 
-//router.get('/', getDbBreeds);
-
-router.get('/all', getCreated);
-
 router.get('/', getBreeds);
 
 router.get('/:breedId', getBreedDetail);
