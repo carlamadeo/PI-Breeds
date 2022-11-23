@@ -250,6 +250,5 @@ module.exports = {
   getBreeds,
   getBreedDetail,
   createBreed,
-  getCreated,
   deleteBreed
 };
