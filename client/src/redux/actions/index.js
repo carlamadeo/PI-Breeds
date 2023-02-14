@@ -1,3 +1,4 @@
+import axios from 'axios';
 export const GET_BREEDS = 'GET_BREEDS';
 export const SET_DISPLAY_BREEDS = 'SET_DISPLAY_BREEDS';
 export const GET_BREEDS_BY_NAME = 'GET_BREEDS_BY_NAME';
@@ -11,16 +12,15 @@ export const DELETE_BREED = 'DELETE_BREED';
 export const DELETE_RESPONSE = 'DELETE_RESPONSE';
 export const GET_RESPONSE = 'GET_RESPONSE';
 export const TOGGLE_LOADING = 'TOGGLE_LOADING';
-const URL = 'http://localhost:3001';
 
 
 const getBreeds = () => {
   return async (dispatch) => {
     dispatch({ type: TOGGLE_LOADING, payload: true });
     try {
-      const response = await fetch(`${URL}/dogs/`);
-      const payload = await response.json();
-      if(response.ok) {
+      const response = await axios.get(`/dogs/`);
+      const payload = await response.data;
+      if (response.status) {
         dispatch({ type: GET_BREEDS, payload });
         dispatch({ type: SET_DISPLAY_BREEDS, payload });
         dispatch({ type: TOGGLE_LOADING, payload: false });
@@ -29,7 +29,7 @@ const getBreeds = () => {
         throw (payload);
       }
     }
-    catch(error) {
+    catch (error) {
       dispatch({ type: GET_RESPONSE, payload: error });
       dispatch({ type: TOGGLE_LOADING, payload: false });
     }
@@ -48,9 +48,9 @@ const getBreedsByName = (name) => {
   return async (dispatch) => {
     dispatch({ type: TOGGLE_LOADING, payload: true });
     try {
-      const response = await fetch(`${URL}/dogs?name=${name}`);
-      const payload = await response.json();
-      if(response.ok) {
+      const response = await axios.get(`/dogs?name=${name}`);
+      const payload = await response.data;
+      if (response.status) {
         dispatch({ type: GET_BREEDS_BY_NAME, payload });
         dispatch({ type: TOGGLE_LOADING, payload: false });
       }
@@ -58,7 +58,7 @@ const getBreedsByName = (name) => {
         throw (payload);
       }
     }
-    catch(error) {
+    catch (error) {
       dispatch({ type: TOGGLE_LOADING, payload: false });
       dispatch(setByNameResponse(error));
     }
@@ -75,9 +75,9 @@ const getBreedDetail = (id) => {
   return async (dispatch) => {
     dispatch({ type: TOGGLE_LOADING, payload: true });
     try {
-      const response = await fetch(`${URL}/dogs/${id}`);
-      const payload = await response.json();
-      if(response.ok) {
+      const response = await axios.get(`/dogs/${id}`);
+      const payload = await response.data;
+      if (response.status) {
         dispatch({ type: GET_BREED_DETAIL, payload });
         dispatch({ type: TOGGLE_LOADING, payload: false });
       }
@@ -85,7 +85,7 @@ const getBreedDetail = (id) => {
         throw (payload);
       }
     }
-    catch(error) {
+    catch (error) {
       dispatch({ type: TOGGLE_LOADING, payload: false });
       dispatch(setByIdResponse(error));
     }
@@ -110,19 +110,15 @@ const createBreed = (breed) => {
   return async (dispatch) => {
     dispatch({ type: TOGGLE_LOADING, payload: true });
     try {
-      const response = await fetch(`${URL}/dogs/`, {
-        method: 'POST',
-        body: JSON.stringify(createBreed),
-        headers: { 'Content-Type': 'application/json' }
-      });
-      const payload = await response.json();
-      if(payload.type === 'Error') throw (payload);
+      const response = await axios.post(`/dogs/`, createBreed);
+      const payload = await response.data;
+      if (payload.type === 'Error') throw (payload);
       addBreed.id = payload.id;
       dispatch(setCreateResponse(payload));
       dispatch({ type: CREATE_BREED, payload: addBreed });
       dispatch({ type: TOGGLE_LOADING, payload: false });
     }
-    catch(error) {
+    catch (error) {
       dispatch({ type: TOGGLE_LOADING, payload: false });
       dispatch(setCreateResponse(error));
     }
@@ -139,16 +135,14 @@ const deleteBreed = (id) => {
   return async (dispatch) => {
     dispatch({ type: TOGGLE_LOADING, payload: true });
     try {
-      const response = await fetch(`${URL}/dogs/${id}`, {
-        method: 'DELETE'
-      });
-      const payload = await response.json();
-      if(payload.type === 'Error') throw (payload);
+      const response = await axios.delete(`/dogs/${id}`);
+      const payload = await response.data;
+      if (payload.type === 'Error') throw (payload);
       dispatch({ type: DELETE_BREED, payload: id });
       dispatch(setDeleteResponse(payload));
       dispatch({ type: TOGGLE_LOADING, payload: false });
     }
-    catch(error) {
+    catch (error) {
       dispatch({ type: TOGGLE_LOADING, payload: false });
       dispatch(setDeleteResponse(error));
     }
@@ -164,11 +158,11 @@ const setDeleteResponse = (payload) => {
 const getTemperaments = () => {
   return async (dispatch) => {
     try {
-      const response = await fetch(`${URL}/temperaments`);
+      const response = await axios.get(`/temperaments`);
       const payload = await response.json();
       dispatch({ type: GET_TEMPERAMENTS, payload });
     }
-    catch(error) {
+    catch (error) {
       console.warn(error);
     }
   }

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import axios from 'axios';
 import { Route, Switch } from 'react-router-dom';
 import NavBar from './components/NavBar/NavBar';
 import Landing from './components/Landing/Landing';
@@ -8,6 +9,8 @@ import BreedDetail from './components/Breeds/BreedDetail';
 import NotFound from './components/Status/NotFound';
 import { useDispatch } from 'react-redux';
 import { getBreeds, getTemperaments } from './redux/actions';
+
+axios.defaults.baseURL = 'http://localhost:3001';
 
 const App = () => {
 
