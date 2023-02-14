@@ -10,7 +10,7 @@ import NotFound from './components/Status/NotFound';
 import { useDispatch } from 'react-redux';
 import { getBreeds, getTemperaments } from './redux/actions';
 
-axios.defaults.baseURL = 'http://localhost:3001';
+axios.defaults.baseURL = 'https://pi-breeds-production.up.railway.app/';
 
 const App = () => {
 

@@ -1,4 +1,5 @@
 const { Op } = require('sequelize');
+const axios = require('axios');
 const { Breed, Temperament } = require('../db');
 const { API_URL, DB_ERROR, API_ERROR, NOT_FOUND, BREED_CREATED, BREED_DELETED, DB_POST_ERROR } = require('../utils');
 
@@ -11,11 +12,11 @@ const getApiBreeds = async (name, breedId) => {
   const breeds = [];
 
   try {
-    const response = await fetch(API_URL);
-    const apiBreeds = await response.json();
+    const response = await axios.get(API_URL);
+    const apiBreeds = await response.data;
 
-    for(dog of apiBreeds) {
-      if(!name && !breedId || name && dog.name.toLowerCase().startsWith(name.toLowerCase()) || dog.id === breedId) {
+    for (dog of apiBreeds) {
+      if (!name && !breedId || name && dog.name.toLowerCase().startsWith(name.toLowerCase()) || dog.id === breedId) {
         const breed = {
           id: dog.id,
           name: dog.name,
@@ -28,13 +29,13 @@ const getApiBreeds = async (name, breedId) => {
           temperaments: dog?.temperament?.split(', '),
           image: dog?.image?.url
         }
-        if(dog.id === breedId) return breed;
+        if (dog.id === breedId) return breed;
         breeds.push(breed);
       }
     }
     return breeds;
   }
-  catch(error) {
+  catch (error) {
     API_ERROR.detail = error;
     throw (API_ERROR);
   }
@@ -54,12 +55,12 @@ const getDbBreeds = async (name, breedId) => {
     }
   }
 
-  if(breedId) {
+  if (breedId) {
     try {
       findParams.attributes.push('min_life_span', 'max_life_span', 'min_height', 'max_height');
       findParams.where = { id: breedId };
       const dbBreed = await Breed.findOne(findParams);
-      if(!dbBreed) return null;
+      if (!dbBreed) return null;
       const temperaments = [];
 
       const breed = {
@@ -81,13 +82,13 @@ const getDbBreeds = async (name, breedId) => {
       breed.temperaments = temperaments;
       return breed;
     }
-    catch(error) {
+    catch (error) {
       DB_ERROR.detail = error;
       throw (DB_ERROR);
     }
   }
 
-  if(name) {
+  if (name) {
     findParams.where = { name: { [Op.iLike]: `${name}%` } }
   }
 
@@ -114,7 +115,7 @@ const getDbBreeds = async (name, breedId) => {
 
     return breeds;
   }
-  catch(error) {
+  catch (error) {
     DB_ERROR.detail = error;
     throw (DB_ERROR);
   }
@@ -134,18 +135,18 @@ const getBreeds = async (req, res) => {
     const apiBreeds = await getApiBreeds(name);
     const dbBreeds = await getDbBreeds(name);
 
-    if(!dbBreeds.length && !apiBreeds.length) return res.status(404).send(NOT_FOUND);
+    if (!dbBreeds.length && !apiBreeds.length) return res.status(404).send(NOT_FOUND);
 
     const sorted = [...apiBreeds, ...dbBreeds].sort((a, b) => {
-      if(a.name === null) return 1;
-      else if(b.name === null) return -1;
-      else if(a.name === b.name) return 0;
+      if (a.name === null) return 1;
+      else if (b.name === null) return -1;
+      else if (a.name === b.name) return 0;
       return (a.name > b.name ? 1 : -1);
     });
 
     return res.status(200).send(sorted);
   }
-  catch(error) {
+  catch (error) {
     res.status(400).send(error);
   }
 }
@@ -158,18 +159,18 @@ const getBreedDetail = async (req, res) => {
 
   try {
 
-    if(isUUID(breedId)) {
+    if (isUUID(breedId)) {
       const dbBreeds = await getDbBreeds(undefined, breedId.toString());
-      if(!dbBreeds) return res.status(404).send(NOT_FOUND);
+      if (!dbBreeds) return res.status(404).send(NOT_FOUND);
       return res.status(200).send(dbBreeds);
     }
 
     const apiBreeds = await getApiBreeds(undefined, parseInt(breedId));
-    if(!apiBreeds.name) return res.status(404).send(NOT_FOUND);
+    if (!apiBreeds.name) return res.status(404).send(NOT_FOUND);
     return res.status(200).send(apiBreeds);
 
   }
-  catch(error) {
+  catch (error) {
     res.status(400).send(error);
   }
 }
@@ -181,30 +182,30 @@ const createBreed = async (req, res) => {
   const newTemps = [];
 
   try {
-    const response = await fetch(API_URL);
-    const apiBreeds = await response.json();
+    const response = await axios.get(API_URL);
+    const apiBreeds = await response.data;
 
-    for(breed of apiBreeds) {
-      if(name && breed.name.toLowerCase() === name.toLowerCase()) {
+    for (breed of apiBreeds) {
+      if (name && breed.name.toLowerCase() === name.toLowerCase()) {
         DB_POST_ERROR.detail = 'Name already exists';
         return res.status(400).send(DB_POST_ERROR);
       }
     }
   }
-  catch(error) {
+  catch (error) {
     return res.status(400).send(DB_POST_ERROR);
   }
 
   try {
 
-    if(!temperaments || !temperaments.length) {
+    if (!temperaments || !temperaments.length) {
       DB_POST_ERROR.detail = 'Please provide at least one temperament';
       throw DB_POST_ERROR;
     }
 
-    for(temp of temperaments) {
+    for (temp of temperaments) {
       const dbTemperament = await Temperament.findByPk(temp);
-      if(dbTemperament && !newTemps.includes(dbTemperament)) {
+      if (dbTemperament && !newTemps.includes(dbTemperament)) {
         newTemps.push(dbTemperament);
       }
       else {
@@ -213,15 +214,15 @@ const createBreed = async (req, res) => {
       }
     }
     const breed = await Breed.create(req.body);
-    for(temp of newTemps) {
+    for (temp of newTemps) {
       await breed.addTemperaments(temp);
     }
     BREED_CREATED.id = breed.dataValues.id;
     return res.status(201).send(BREED_CREATED);
   }
-  catch(error) {
-    if(error.errors) DB_POST_ERROR.detail = error.errors[0]?.message;          //Errors from Model (sequelize model Breeds) 
-    if(error.parent?.detail) DB_POST_ERROR.detail = error.parent?.detail;     //TODO: no me acuerdo para que lo hice, revisar!
+  catch (error) {
+    if (error.errors) DB_POST_ERROR.detail = error.errors[0]?.message;          //Errors from Model (sequelize model Breeds) 
+    if (error.parent?.detail) DB_POST_ERROR.detail = error.parent?.detail;     //TODO: no me acuerdo para que lo hice, revisar!
     return res.status(400).send(DB_POST_ERROR);
   }
 }
@@ -237,10 +238,10 @@ const deleteBreed = async (req, res) => {
       }
     });
 
-    if(response) return res.status(200).send(BREED_DELETED);
+    if (response) return res.status(200).send(BREED_DELETED);
     return res.status(200).send({ type: 'Not Deleted', detail: 'No breeds found' });
 
-  } catch(error) {
+  } catch (error) {
     DB_ERROR.detail = error;
     return res.status(400).send(DB_ERROR);
   }
